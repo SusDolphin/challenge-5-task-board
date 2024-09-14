@@ -94,10 +94,37 @@ function renderTaskList() {
   }
 
 // Todo: create a function to handle adding a new task
-function handleAddTask(event){
-
-}
-
+function handleAddTask(event) {
+    event.preventDefault();
+  
+    // ? Read user input from the form
+    const projectName = projectNameInputEl.val().trim();
+    const projectType = projectTypeInputEl.val(); // don't need to trim select input
+    const projectDate = projectDateInputEl.val(); // yyyy-mm-dd format
+  
+    const newProject = {
+      // ? Here we use a Web API called `crypto` to generate a random id for our project. This is a unique identifier that we can use to find the project in the array. `crypto` is a built-in module that we can use in the browser and Nodejs.    id: crypto.randomUUID(),
+      name: projectName,
+      type: projectType,
+      dueDate: projectDate,
+      status: 'to-do',
+    };
+  
+    // ? Pull the projects from localStorage and push the new project to the array
+    const projects = readProjectsFromStorage();
+    projects.push(newProject);
+  
+    // ? Save the updated projects array to localStorage
+    saveProjectsToStorage(projects);
+  
+    // ? Print project data back to the screen
+    printProjectData();
+  
+    // ? Clear the form inputs
+    projectNameInputEl.val('');
+    projectTypeInputEl.val('');
+    projectDateInputEl.val('');
+  }
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
 
