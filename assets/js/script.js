@@ -28,8 +28,8 @@ function createTaskCard(task) {
   const cardDeleteBtn = $('<button>')
     .addClass('btn btn-danger delete')
     .text('Delete')
-    .attr('data-taskid', project.id);
-  cardDeleteBtn.on('click', handleDeleteProject);
+    .attr('data-taskid', task.id);
+  cardDeleteBtn.on('click', handleDeleteTask);
 
   // ? Sets the card background color based on due date. Only apply the styles if the dueDate exists and the status is not done.
   if (task.dueDate && task.status !== 'done') {
@@ -54,7 +54,7 @@ function createTaskCard(task) {
 }
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
-    const tasks = readTasksFromStorage();
+    
   
     // ? Empty existing project cards out of the lanes
     const todoList = $('#todo-cards');
@@ -67,13 +67,13 @@ function renderTaskList() {
     doneList.empty();
   
     // ? Loop through tasks and create task cards for each status
-    for (let task of tasks) {
+    for (let task of taskList) {
       if (task.status === 'to-do') {
         todoList.append(createTaskCard(task));
       } else if (task.status === 'in-progress') {
         inProgressList.append(createTaskCard(task));
       } else if (task.status === 'done') {
-        doneList.append(createTaskCard(project));
+        doneList.append(createTaskCard(task));
       }
     }
   
